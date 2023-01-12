@@ -1,0 +1,94 @@
+resources
+    users
+        JSON
+            id
+            email address
+            phone number
+            fullname
+            shipping address
+            credit card information
+            created at
+            updated at
+        operations & URI
+            by anyone
+                POST /users
+            by authenticated users & admins
+                GET /users/{id}
+                PUT /users/{id}
+                DELETE /users/{id}
+            by admins
+                GET /users
+    items
+        JSON
+            id
+            title
+            description
+            price
+            created at
+            updated at
+        operations & URI
+            by anyone
+                GET /items
+                GET /items/{id}
+    account registration function
+        HTML
+            <form>
+            <input>
+        operations & URI
+            by anyone
+                GET /registration
+                POST /registration
+    user authentication function
+        HTML
+            <form>
+            <input>
+        operations & URI
+            by anyone
+                GET /authentication
+                POST /authentication
+    client
+        HTML
+            components
+                navigation
+                    link to /
+                    link to /registration
+                    link to /authentication
+        operations & URI
+            by anyone
+                GET /
+
+client application
+    features
+        account
+            CRUD
+        render item detail view
+        initiate checkout flow
+
+problem
+    provide shopping experience as a service
+        service
+            function
+                provide shopping experience
+            user interface
+                web browser application
+            provider
+                backend system
+            features
+                POV: user
+                    p0
+                        use account related features
+                        browse detailed information associated with particular item
+                        place order
+                    p1
+                        search items
+                        browse list of items searched
+                        shopping cart
+                            add item
+                            remove item
+                            update quantity of selected item
+                    p?
+        shopping experience
+            properties
+                is reliable
+                is effortless
+                is efficient
