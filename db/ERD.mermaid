@@ -1,0 +1,39 @@
+---
+title: theStore
+---
+  erDiagram
+    USER ||..o{ ORDER: place
+    USER {
+        UUID id PK "DEFAULT gen_random_uuid"
+        char first_name "required"
+        char last_name "required"
+        char ship_addr_st
+        char ship_addr_line2
+        char ship_addr_city
+        char ship_addr_region
+        char postal_code
+        char ship_addr_country
+        char credit_card_type
+        char credit_card_number "unique"
+        char phone
+        char email "required, unique"
+    }
+    ORDER {
+        UUID id PK "DEFAULT gen_random_uuid"
+        UUID user_id FK
+        monetary total "required"
+    }
+    ORDER ||--|{ ORDERED_ITEM : contain
+    ORDERED_ITEM {
+        UUID id PK "DEFAULT gen_random_uuid"
+        UUID item_id FK 
+        int quantity "required"
+    }
+    ORDERED_ITEM }o..|{ ITEM : contain
+    ITEM {
+        UUID id PK "DEFAULT gen_random_uuid"
+        char title "required"
+        char description
+        num price "required"
+    }
+
