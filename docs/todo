@@ -1,0 +1,25 @@
+ [acquisition, storage, sharing] of development related knowledge 
+    work notes
+        catch up
+        write notes of the day
+        publish notes
+            determine a way to publish it
+    work blog
+        check points
+            after
+                having seeded initial db scheme
+    work vlog
+        publish on video streaming website
+            set up video streaming website
+                record vlog of the day
+                    set up tools to record screen and voice
+
+db
+    find a way to seed db that is supposed to hold records that references records within other tables - Synth?
+    create SQL scripts
+        that creates all table schema
+    create dedicated schema and use it rather than public schema
+    use Mockaroo to generate test data
+    seed
+        
+        
