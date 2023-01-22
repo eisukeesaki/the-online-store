@@ -1,0 +1,75 @@
+# theStore
+
+init repo - Jan 11 2023
+
+## unknown date
+
+(started taking work notes few days after starting to work on the project; this section is written off of un-fresh memory)
+
+defined problems using first principles thinking
+
+encountered a new concept in a podcast
+    the concept
+        First principles thinking
+    description by GPT-3
+        First principles thinking is an approach to problem solving that relies on breaking down problems into the most basic components. It involves breaking down complex problems into simple, fundamental truths that cannot be deduced any further, and then using logic to build up from there to find a solution.
+    place encountered
+        Indie Hackers Podcast: https://share.transistor.fm/s/36dfec5e?t=32m18s
+    comments
+        I was already using the problem solving technique without knowing that there was a name for it. 
+
+defined features of client application
+
+defined resources
+    things defined
+        data model
+            entities
+            entity relationships
+            resource representations
+        URIs
+        available HTTP methods to execute on resources
+        permission configuration of defined HTTP methods
+        
+designed architecture
+    defined architectural components
+
+## 21
+
+created db user, configured password and privileges
+    1. Create a new user with the desired privileges:
+        CREATE USER username WITH PASSWORD 'password';
+    2. Grant privileges to the new user: 
+        GRANT ALL PRIVILEGES ON DATABASE database_name TO username;
+    3. Create the schema: 
+        CREATE SCHEMA schema_name;
+    4. Grant the user access to the schema: 
+        GRANT ALL ON SCHEMA schema_name TO username;
+    5. Grant the user access to objects in the schema: 
+        GRANT ALL ON ALL TABLES IN SCHEMA schema_name TO username;
+    6. Grant the user access to sequences in the schema: 
+        GRANT ALL ON ALL SEQUENCES IN SCHEMA schema_name TO username;
+    7. Grant the user access to functions in the schema: 
+        GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA schema_name TO username;
+    8. Grant the user access to types in the schema: 
+        GRANT USAGE ON ALL TYPES IN SCHEMA schema_name TO username;
+
+configured postgresql search path
+    https://www.postgresql.org/docs/current/ddl-schemas.html
+
+created db migration script
+    migration script
+        functions
+            create
+                db
+                schema
+                tables
+                    users
+                    orders
+                    items
+                    ordered_items
+                etc.
+
+wip
+    seed
+        tool
+            https://www.mockaroo.com
