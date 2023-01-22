@@ -97,11 +97,13 @@ CREATE TABLE items (
         DEFAULT gen_random_uuid()
         NOT NULL,
     title
-        VARCHAR(50),
+        VARCHAR(50)
+        NOT NULL,
     description
         VARCHAR(9999),
     price
-        NUMERIC(4,2),
+        money
+        NOT NULL,
     created
         TIMESTAMP
         NOT NULL
