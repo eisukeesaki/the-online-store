@@ -35,6 +35,13 @@ resources
                 GET /users
     orders
         JSON
+            id
+            _user_id
+            total
+    order_items
+        JSON
+            id
+            _item_id
     items
         JSON
             id
@@ -80,12 +87,13 @@ client application
             CRUD
         render item detail view
         initiate checkout flow
+            TODO
 
 problem
-    provide shopping experience as a service
+    provide online shopping experience as a online service
         service
             function
-                provide shopping experience
+                provide online shopping experience
             user interface
                 web browser application
             provider
@@ -93,19 +101,28 @@ problem
             features
                 POV: user
                     p0
-                        use account related features
-                        browse detailed information associated with particular item
+                        manage account
+                        browse detailed information of a particular item sold
                         place order
+                            shopping cart
+                                add item
+                                remove item
+                                update quantity of selected item
                     p1
-                        search items
+                        search items sold
                         browse list of items searched
-                        shopping cart
-                            add item
-                            remove item
-                            update quantity of selected item
                     p?
         shopping experience
             properties
-                is reliable
-                is effortless
-                is efficient
+                is magical
+                    is reliable
+                        service is up all the time
+                        minimal
+                            hiccups
+                            errors
+                    is effortless
+                        easy for users to figure out how to use the service via UI
+                        user can can navigate the interface using minimal input
+                    is efficient
+                        require minimal amount of work from users
+                        architectural components doing their work efficiently
