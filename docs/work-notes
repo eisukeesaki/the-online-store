@@ -71,13 +71,29 @@ created db migration script
 
 created db schemas for Mockaroo
 
-generated relational test data (CSV) using Mockaroo
+generated relational test data (CSV) 
+    how
+        using Mockaroo's web app,
+            create schemas
+            generate data set for referenced tables
+            in the FK field of referencing tables, specify "dataset column" and reference tables
+            generate data sets for tables containing FKs
+            download CSVs to project directory
 
-imported test data (CSV) into all tables
+imported test data (CSV) into all postgresql tables
+    how 
+        create
+            file.sql
+                COPY FROM
+        use
+            psql
+                \i <file.sql>
 
 issues
     thestore.store.orders.total is a randomly generated data
         solution
             use the data in ordered_items and orders to calculate a real total value
     all tables are dropped at the end of psql session
+        hypotheses
+            associated with usage of postgresql schemas
     
