@@ -69,7 +69,15 @@ created db migration script
                     ordered_items
                 etc.
 
-wip
-    seed
-        tool
-            https://www.mockaroo.com
+created db schemas for Mockaroo
+
+generated relational test data (CSV) using Mockaroo
+
+imported test data (CSV) into all tables
+
+issues
+    thestore.store.orders.total is a randomly generated data
+        solution
+            use the data in ordered_items and orders to calculate a real total value
+    all tables are dropped at the end of psql session
+    
