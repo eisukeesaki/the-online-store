@@ -2,6 +2,8 @@
 CREATE DATABASE thestore;
 \c thestore
 
+ALTER DATABASE thestore SET search_path TO store;
+
 -- SCHEMAS
 CREATE SCHEMA store;
 SET search_path TO store;
@@ -140,4 +142,3 @@ CREATE TRIGGER update_ordered_items_modtime
     ON ordered_items
     FOR EACH ROW
         EXECUTE PROCEDURE update_modified_column();
-
