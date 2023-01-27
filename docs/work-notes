@@ -89,11 +89,70 @@ imported test data (CSV) into all postgresql tables
             psql
                 \i <file.sql>
 
+configured postgresql
+    logging
+        enabled logging collector
+        set log directory
+
 issues
+    all tables are (seemingly) dropped at the end of psql session
+        how to reproduce
+            connect to postgres via psql as superuser
+            \i migration-file
+                file contents
+                    create database
+                    create schema
+                    set search_path
+                    ...
+                    create table unqualified_table_name
+                    ...
+            connect to different database
+            connect to database created by executing \i
+            \d
+                expected behavior
+                    list of tables are returned by psql
+                unexpected behavior
+                    psql returns "did not find any relations"
+        gotcha
+            be default, search_path is reset when a connection is closed.
+                how to persist contents of search_path
+                    SET search_path at the database level (or user level)
+                        example
+                            ALTER DATABASE thestore SET search_path TO store;
+            more info
+                https://stackoverflow.com/questions/2875610/permanently-set-postgresql-schema-path
+        hypotheses
+            use of custom schemas
+        attempts to resolve
+            trying to set log_destination = stderr,syslog,eventlog in postgresql.conf to increase transparency of posgresql server
+                brew services start postgresql@14 throws error
+                    probably caused by invalid postgresql.conf
+                        don't know where to look for detailed info about the error (brew list shows status code 256)
+                            brew seems to not log activities of brew services by default
+                                could try configuring brew or launchctl (invoked by brew services) to log relevant activity
+        notes
+            tables created by SQL execution via psql prompt persists, but not the tables created by \i sql
+            postgresql log is showing weird logs when disconnecting/connecting to dbs
+            no relevant logs found in /var/log/system.log
+            https://sharegpt.com/c/CtM0d6i
+        verified
+            tables are not dropped
+                checked logs; DROP command is not executed;
+            not cause
+                not the cause of issue
+                    use of \i
+                    db user not having privilege
+                    use of IF NOT EXIST on CREATE TABLEs
+            cause
+                use of custom schema
+                    schema added to search_path is (seemingly) dropped
+                        when
+                            either
+                                upon disconnection from created database
+                                upon reconnection to created database
     thestore.store.orders.total is a randomly generated data
         solution
             use the data in ordered_items and orders to calculate a real total value
-    all tables are dropped at the end of psql session
-        hypotheses
-            associated with usage of postgresql schemas
     
+if you psql with -v ON_ERROR_STOP=1, psql will display errors thrown by postgresql on stdout
+
