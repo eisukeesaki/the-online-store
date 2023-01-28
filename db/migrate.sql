@@ -125,6 +125,9 @@ CREATE TABLE ordered_items (
         PRIMARY KEY
         DEFAULT gen_random_uuid()
         NOT NULL,
+    order_id UUID
+        REFERENCES orders
+        NOT NULL,
     item_id UUID
         REFERENCES items
         NOT NULL,
