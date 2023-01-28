@@ -2,7 +2,7 @@
 title: theStore
 ---
   erDiagram
-    USER ||..o{ ORDER: place
+    USER ||--o{ ORDER: "places/placed by"
     USER {
         UUID id PK "DEFAULT gen_random_uuid"
         char first_name "required"
@@ -23,17 +23,19 @@ title: theStore
         UUID user_id FK
         monetary total "required"
     }
-    ORDER ||--|{ ORDERED_ITEM : contain
+    ORDER ||--|{ ORDERED_ITEM : "consists of/constitues"
     ORDERED_ITEM {
         UUID id PK "DEFAULT gen_random_uuid"
+        UUID order_id FK
         UUID item_id FK 
         int quantity "required"
     }
-    ORDERED_ITEM }o..|{ ITEM : contain
+    ORDERED_ITEM }o--|{ ITEM : "consists of/constitutes"
     ITEM {
         UUID id PK "DEFAULT gen_random_uuid"
         char title "required"
         char description
         num price "required"
     }
+
 
