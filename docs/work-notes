@@ -1,8 +1,4 @@
-# theStore
-
 init repo - Jan 11 2023
-
-## unknown date
 
 (started taking work notes few days after starting to work on the project; this section is written off of un-fresh memory)
 
@@ -32,8 +28,6 @@ defined resources
         
 designed architecture
     defined architectural components
-
-## 21
 
 created db user, configured password and privileges
     1. Create a new user with the desired privileges:
@@ -95,7 +89,7 @@ configured postgresql
         set log directory
 
 issues
-    all tables are (seemingly) dropped at the end of psql session
+    ✓all tables are (seemingly) dropped at the end of psql session
         how to reproduce
             connect to postgres via psql as superuser
             \i migration-file
@@ -153,6 +147,79 @@ issues
     thestore.store.orders.total is a randomly generated data
         solution
             use the data in ordered_items and orders to calculate a real total value
+                formula
+                    total = item.price * ordered_item.quantity
     
 if you psql with -v ON_ERROR_STOP=1, psql will display errors thrown by postgresql on stdout
+
+generated seed data
+    test data generation tool used
+        mockaroo.com
+            issues
+                error: no implicit conversion of String into Integer
+                    https://forum.mockaroo.com/t/convert-a-datatype-error/926
+                can't just give the tool a formula to calculate a column value and expect it to generate test data
+                    formula that I needed to work
+                        store.order.total = store.item.price * store.ordered_item.quantity
+                    expected usage of tool
+                        get `price` of random row in store.items from store.orders schema
+                        get `quantity` of random row in store.ordered_items from store.orders schema
+                        multiply `price` & `quantity` and use the result for store.orders.total
+                        from_dataset("store.item", "price"/*, random row */) * from_dataset("store.ordered_item", "quantity"/*, random row */)
+                    cause
+                        store.order & store.ordered_item has identifying relationships
+                        limitation of tool
+                            from_dataset() requires 3 arguments and thus cannot choose a "random row"
+                                mockaroo.com/help/formulas
+                    work around
+                        create Mockaroo schemas that doesn't belong to any "real" schema
+                        generate data set
+                        from schema that has identifying relationships with other schema, get the data generated in previous step
+                            example
+                                create tmp schemas
+                                    schemas
+                                        tmp.order.ids
+                                            column
+                                                id
+                                                    random GUID
+                                        tmp.item.prices
+                                            column
+                                                price
+                                                    type
+                                                        dataset column
+                                                    reference
+                                                        store.items.price
+                                        tmp.ordered_item.quantities
+                                            column
+                                                quantity
+                                                    type
+                                                        random integer
+                                        tmp.order.totals
+                                            columns
+                                                item_price
+                                                    type
+                                                        dataset column
+                                                    reference
+                                                        tmp.item.prices.price
+                                                ordered_item_quantity
+                                                    type
+                                                        dataset column
+                                                    reference
+                                                        tmp.ordered_item.quantities.quantity
+                                                order_total
+                                                    formula
+                                                        item_price.to_i * ordered_item_quantity.to_i
+                                                    gotcha
+                                                        convert string to integer using Ruby method in formula
+                                                            fieldname.to_i
+                
+seeded tables
+    tables
+        users
+        items
+        orders
+        ordered_items
+    by running SQL script
+        SQL
+            COPY _tablename_ FROM _path to file__ ...
 
